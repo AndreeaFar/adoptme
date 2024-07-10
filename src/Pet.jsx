@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 
+// Renders individual pet information
 const Pet = (props) => {
   const { name, animal, breed, images, location, id } = props;
 
+  // Default image if none are available
   let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
   if (images.length) {
     hero = images[0];

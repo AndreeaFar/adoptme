@@ -1,5 +1,6 @@
 import Pet from "./Pet";
 
+// Display the list of pets
 const Results = ({ pets }) => {
   return (
     <div className="search">

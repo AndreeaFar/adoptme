@@ -1,0 +1,36 @@
+import { useState, useEffect } from "react"; // without react query
+// - this will be never used on the app - I keep it just for example
+
+const localCache = {};
+
+// Custom hook to fetch and manage the breed list based on the selected animal
+export default function useBreedList(animal) {
+  const [breedList, setBreedList] = useState([]);
+  const [status, setStatus] = useState("unloaded");
+
+  useEffect(() => {
+    if (!animal) {
+      setBreedList([]);
+    } else if (localCache[animal]) {
+      // Use cached breed list if available
+      setBreedList(localCache[animal]);
+    } else {
+      requestBreedList(); // Fetch breed list if not cached
+    }
+
+    async function requestBreedList() {
+      setBreedList([]);
+      setStatus("loading");
+
+      const res = await fetch(
+        `http://pets-v2.dev-apis.com/breeds?animal=${animal}`,
+      );
+
+      const json = await res.json();
+      localCache[animal] = json.breeds || [];
+      setBreedList(localCache[animal]);
+      setStatus("loaded");
+    }
+  }, [animal]);
+  return [breedList, status];
+}

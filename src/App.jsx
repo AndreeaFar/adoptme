@@ -4,11 +4,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SearchParams from "./SearchParams";
 import Details from "./Details";
 
+// Initialize React Query Client with infinite cache
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      staleTime: Infinity, // Data stays fresh indefinitely
+      cacheTime: Infinity, // Cache never expires
     },
   },
 });
@@ -29,6 +30,7 @@ const App = () => {
   );
 };
 
+// Create a root container for the app
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(<App />);

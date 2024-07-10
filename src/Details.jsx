@@ -4,9 +4,10 @@ import fetchPet from "./fetchPet";
 
 const Details = () => {
   const { id } = useParams();
+  // Fetch pet details based on id using React Query
   const results = useQuery(["details", id], fetchPet);
 
-  // for the first load only
+  // For the first load only
   if (results.isLoading) {
     return (
       <div className="loading-pane">
