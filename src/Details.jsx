@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import ErrorBoundary from "./ErrorBoundary";
 import Carousel from "./Carousel";
 import fetchPet from "./fetchPet";
 
@@ -9,7 +10,7 @@ const Details = () => {
   // Fetch pet details based on id using React Query
   const results = useQuery(["details", id], fetchPet);
 
-  // For the first load only
+  // For the first load only,display a loading spinner while the data is being fetched
   if (results.isLoading) {
     return (
       <div className="loading-pane">
@@ -33,4 +34,13 @@ const Details = () => {
   );
 };
 
-export default Details;
+// wrap Details component with ErrorBoundary to handle errors
+function DetailsErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
+
+export default DetailsErrorBoundary;
